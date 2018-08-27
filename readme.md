@@ -21,8 +21,8 @@
 ---|---|---|---
 [commit] | ⏰ 2018 8.20 | ![last] | [中文翻译][translate-list]
 
-[last]: https://img.shields.io/github/last-commit/chinanf-boy/doc-templite.svg
-[commit]: https://github.com/chinanf-boy/doc-templite/tree/
+[last]: https://img.shields.io/github/last-commit/sharkdp/fd.svg
+[commit]: https://github.com/sharkdp/fd/tree/2465cd139962c2f3a1d674846b6adc687daa72fa
 
 <!-- doc-templite END generated -->
 
@@ -38,8 +38,45 @@
 
 ### 目录
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [峡湾](#%E5%B3%A1%E6%B9%BE)
+  - [特征](#%E7%89%B9%E5%BE%81)
+  - [演示](#%E6%BC%94%E7%A4%BA)
+  - [基准](#%E5%9F%BA%E5%87%86)
+  - [彩色输出](#%E5%BD%A9%E8%89%B2%E8%BE%93%E5%87%BA)
+  - [并行命令执行](#%E5%B9%B6%E8%A1%8C%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C)
+  - [安装](#%E5%AE%89%E8%A3%85)
+    - [关于Ubuntu](#%E5%85%B3%E4%BA%8Eubuntu)
+    - [论费多拉](#%E8%AE%BA%E8%B4%B9%E5%A4%9A%E6%8B%89)
+    - [ARCLinux的研究](#arclinux%E7%9A%84%E7%A0%94%E7%A9%B6)
+    - [基于GUToOLinux的研究](#%E5%9F%BA%E4%BA%8Egutoolinux%E7%9A%84%E7%A0%94%E7%A9%B6)
+    - [浅谈OpenSSuLinux](#%E6%B5%85%E8%B0%88openssulinux)
+    - [论无效Linux](#%E8%AE%BA%E6%97%A0%E6%95%88linux)
+    - [论马科斯](#%E8%AE%BA%E9%A9%AC%E7%A7%91%E6%96%AF)
+    - [在Windows上](#%E5%9C%A8windows%E4%B8%8A)
+    - [关于NIXOS/VIX NIX](#%E5%85%B3%E4%BA%8Enixosvix-nix)
+    - [关于FreeBSD](#%E5%85%B3%E4%BA%8Efreebsd)
+    - [从源头](#%E4%BB%8E%E6%BA%90%E5%A4%B4)
+    - [从二进制文件](#%E4%BB%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6)
+  - [发展](#%E5%8F%91%E5%B1%95)
+  - [命令行选项](#%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%89%E9%A1%B9)
+  - [辅导的](#%E8%BE%85%E5%AF%BC%E7%9A%84)
+    - [简单搜索](#%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2)
+    - [正则表达式搜索](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%90%9C%E7%B4%A2)
+    - [指定根目录](#%E6%8C%87%E5%AE%9A%E6%A0%B9%E7%9B%AE%E5%BD%95)
+    - [运行*峡湾*没有任何争论](#%E8%BF%90%E8%A1%8C%E5%B3%A1%E6%B9%BE%E6%B2%A1%E6%9C%89%E4%BB%BB%E4%BD%95%E4%BA%89%E8%AE%BA)
+    - [搜索特定的文件扩展名](#%E6%90%9C%E7%B4%A2%E7%89%B9%E5%AE%9A%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D)
+    - [隐藏和忽略的文件](#%E9%9A%90%E8%97%8F%E5%92%8C%E5%BF%BD%E7%95%A5%E7%9A%84%E6%96%87%E4%BB%B6)
+    - [排除特定文件或目录](#%E6%8E%92%E9%99%A4%E7%89%B9%E5%AE%9A%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95)
+    - [使用FD与`xargs`或`parallel`](#%E4%BD%BF%E7%94%A8fd%E4%B8%8Exargs%E6%88%96parallel)
+    - [与其他程序的集成](#%E4%B8%8E%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%9B%86%E6%88%90)
+      - [使用FD与`fzf`](#%E4%BD%BF%E7%94%A8fd%E4%B8%8Efzf)
+      - [使用FD与`emacs`](#%E4%BD%BF%E7%94%A8fd%E4%B8%8Eemacs)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 # 峡湾
