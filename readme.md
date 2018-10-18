@@ -86,20 +86,20 @@
 
 *fd*是一种简单ㄡ快速和用户友好的[*fd*](https://www.gnu.org/software/findutils/)替代方案. 
 
-当它不寻求镜像所有*find*的强大功能,但它提供了明智的 (自定的) [80%](https://en.wikipedia.org/wiki/Pareto_principle)的用例. 
+虽然它不寻求复刻*find*所有强大的功能,但它提供了明智的 (自定的) [80%](https://en.wikipedia.org/wiki/Pareto_principle)的用例. 
 
 ## 特征
 
 -   方便语法: `fd PATTERN`而不是`find -iname '*PATTERN*'`.
 -   彩色终端输出 (类似于*ls*) 
--   它是*快速的* (见[基准](#benchmark)下面) . 
--   聪明案例: 默认情况下,搜索不区分大小写. 如果模式包含大写字符,则切换为区分大小写字符. [\*](http://vimdoc.sourceforge.net/htmldoc/options.html#'smartcase').
+-   它是*快速的* (见[基准](#%E5%9F%BA%E5%87%86)下面) . 
+-   聪明案例: 默认情况下,搜索不区分大小写. 如果模式包含大写字符[\*](http://vimdoc.sourceforge.net/htmldoc/options.html#'smartcase'), 则切换为区分大小写字符. .
 -   默认情况下,忽略隐藏的目录和文件. 
--   忽略你的`.gitignore`下匹配,默认情况. 
+-   忽略匹配你`.gitignore`文件中的模式,默认情况. 
 -   正则表达式. 
 -   Unicode感知. 
--   命令输入量*50%*优化的[\*](https://github.com/ggreer/the_silver_searcher)比`find`: -) 
--   用类似于GNU并行的语法执行并行命令. 
+-   命令输入量*50%*优于[\*](https://github.com/ggreer/the_silver_searcher)`find`: -) 
+-   用类似于GNU穿行的语法，执行并行命令. 
 
 ## 演示
 
@@ -107,7 +107,7 @@
 
 ## 基准
 
-让我们搜索我的主文件夹的文件结束`[0-9].jpg`. 它包含190个子目录和大约一百万个文件. 对于平均和统计分析,我在使用[hyperfine](https://github.com/sharkdp/hyperfine). 下面的基准是用"warm"/预填充的磁盘缓存执行的 (对于"冷"磁盘缓存的结果显示出相同的趋势) . 
+让我们搜索我的主文件夹的以`[0-9].jpg`为结束的文件. 它包含190个子目录和大约一百万个文件. 我使用[hyperfine](https://github.com/sharkdp/hyperfine)进行平均和统计分析. 下面的基准是用"warm"/预填充的磁盘缓存执行的 (对于"冷"磁盘缓存的结果显示出相同的趋势) . 
 
 让我们从`find`: 
 
@@ -126,7 +126,7 @@
 
       Range (min … max):    3.876 s …  3.964 s
 
-现在让我们尝试同样的`fd`. 注意`fd` *总是*执行正则表达式搜索. 选项`--hidden`和`--no-ignore`需要自行决策,这里`fd`遍历隐藏文件夹和忽略的路径 (见下文) : 
+现在让我们尝试同样的`fd`. 注意`fd` *总是*执行正则表达式搜索. 选项`--hidden`和`--no-ignore`需要自行决策, 下面的`fd`需要遍历隐藏文件夹和忽略的路径 (见下文) : 
 
     Benchmark #3: fd -HI '.*[0-9]\.jpg$' ~
 
@@ -134,7 +134,7 @@
 
       Range (min … max):   786.0 ms … 870.7 ms
 
-对于这个特殊的例子,`fd`大约比`find -iregex`快九倍,和大约快五倍比`find -iname`. 顺便说一下,两个工具都找到了完全相同的20880个文件: 微笑. 
+对于这个特殊的例子,`fd`大约比`find -iregex`快九倍,和大约比`find -iname`快五倍. 顺便说一下,两个工具都找到了完全相同的20880个文件: :smile: . 
 
 最后,让我们运行`fd`没有`--hidden`和`--no-ignore`选项 (当然,这会导致不同的搜索结果) . 如果*fd*不必遍历隐藏的和Git忽略的文件夹,它的数量级快了一个数量级: 
 
@@ -144,17 +144,17 @@
 
       Range (min … max):   118.8 ms … 140.0 ms
 
-**注释**这是在*一个特定的*机器上的*一个特定的*基准. 虽然我已经做了很多不同的测试 (并且发现了一致的结果) ,但是事情可能对你来说不同. 我鼓励每个人自己尝试测试. 见[这个仓库](https://github.com/sharkdp/fd-benchmarks)用于所有对比的脚本. 
+**注释**这是在*一个特定的*机器上的*一个特定的*基准. 虽然我已经做了很多不同的测试 (并且发现了一致的结果) ,但是事情可能对你来说不同. 我鼓励每个人自己尝试测试. 在[这个仓库](https://github.com/sharkdp/fd-benchmarks)是所有用于对比的脚本. 
 
-关于*fd*的速度,主要的耗时在`regex`和`ignore`,还有箱子[ripgrep](https://github.com/BurntSushi/ripgrep) (检查一下!) .
+关于*fd*的速度,主要的耗时在`regex`和`ignore`,还有[ripgrep](https://github.com/BurntSushi/ripgrep)箱子 (检查一下!) .
 
 ## 彩色输出
 
-`fd`可以通过扩展来着色文件,就像`ls`. 为了使这工作,环境变量[`LS_COLORS`](https://linux.die.net/man/5/dir_colors)必须设置. 通常,此变量的值由`dircolors`命令控制,它提供了一种方便的配置格式,来定义不同文件格式的颜色. 在大多数分布上,`LS_COLORS`应该已经设置好了. 如果您正在寻找替代的且更完整的 (以及更丰富多彩的) 变体,请参见[在这里](https://github.com/seebi/dircolors-solarized)或[在这里](https://github.com/trapd00r/LS_COLORS).
+`fd`可以通过扩展来帮输出着色,就像`ls`. 为了使这工作,环境变量[`LS_COLORS`](https://linux.die.net/man/5/dir_colors)必须设置. 通常,此变量的值由`dircolors`命令控制,它提供了一种方便的配置格式,来定义不同文件格式的颜色. 在大多数分配情况,`LS_COLORS`应该已经设置好了. 如果您正在寻找替代的，且更完整的 (以及更丰富多彩的) 变体,请参见[在这里](https://github.com/seebi/dircolors-solarized)或[在这里](https://github.com/trapd00r/LS_COLORS).
 
 ## 并行命令执行
 
-如果`-x`/`--exec`选项与命令模板一起指定,将创建一个作业池,用于为每个发现的路径并行执行命令作为输入. 生成命令的语法类似于GNU并行的语法: 
+如果`-x`/`--exec`选项与命令模板一起指定,将创建一个作业池,用于并行执行命令，每个发现的路径则作为输入. 生成命令的语法类似于GNU穿行的语法: 
 
 -   `{}`: 将被替换为搜索结果路径的占位符令牌 (`documents/images/party.jpg`) 
 -   `{.}`: 像`{}`,但没有文件扩展名 (`documents/images/party`) 
@@ -178,11 +178,11 @@ fd -x wc -l \; -e rs
 
 ## 安装
 
-### 关于Ubuntu
+### Ubuntu
 
 *以及其他基于Debian的Linux发行版.*
 
-下载最新`.deb`包装从[发布页面](https://github.com/sharkdp/fd/releases)并通过以下方式安装: 
+下载最新`.deb`包装从[releases页面](https://github.com/sharkdp/fd/releases)并通过以下方式安装: 
 
 ```bash
 sudo dpkg -i fd_7.0.0_amd64.deb  # adapt version number and architecture
@@ -190,7 +190,7 @@ sudo dpkg -i fd_7.0.0_amd64.deb  # adapt version number and architecture
 
 ### Fedora
 
-从 FEDORA 28 开始,您可以安装`fd`从官方包装来源: 
+从 FEDORA 28 开始,您可以从官方包装来源安装`fd`: 
 
 ```bash
 dnf install fd-find
@@ -205,31 +205,31 @@ dnf install fd
 
 ### Arch Linux
 
-你可以安装[FD软件包](https://www.archlinux.org/packages/community/x86_64/fd/)从官方回购: 
+你可以从官方回购安装[fd 软件包](https://www.archlinux.org/packages/community/x86_64/fd/): 
 
     pacman -S fd
 
 ### Gentoo Linux
 
-你可以使用[FD eBug](https://packages.gentoo.org/packages/sys-apps/fd)从官方回购: 
+你可以从官方回购使用[fd 软件包](https://packages.gentoo.org/packages/sys-apps/fd): 
 
     emerge -av fd
 
 ### openSUSE Linux
 
-你可以安装[FD软件包](https://software.opensuse.org/package/fd)从官方回购: 
+你可以从官方回购安装[fd 软件包](https://software.opensuse.org/package/fd): 
 
     zypper in fd
 
 ### Void Linux
 
-你可以安装`fd`通过XBPS安装: 
+你可以安装`fd`通过xbps安装: 
 
     xbps-install -S fd
 
 ### macOS
 
-你可以安装`fd`具有[自酿啤酒](http://braumeister.org/formula/fd): 
+你可以安装`fd`具有[brew](http://braumeister.org/formula/fd): 
 
     brew install fd
 
@@ -237,9 +237,9 @@ dnf install fd
 
     sudo port install fd
 
-### 在Windows上
+### Windows
 
-您可以从中下载预构建的二进制文件. [发布页面](https://github.com/sharkdp/fd/releases).
+您可以从中 [releases页面](https://github.com/sharkdp/fd/releases)，下载预构建的二进制文件.
 
 或者,您可以安装`fd`通过[Scoop](http://scoop.sh): 
 
@@ -257,21 +257,21 @@ dnf install fd
 
 ### FreeBSD
 
-你可以安装`sysutils/fd`通过PATMASTER: 
+你可以安装`sysutils/fd`通过patmaster: 
 
     portmaster sysutils/fd
 
-### 源文件
+### 源码文件
 
-你可以安装*fd*通过rust的包管理[cargo](https://github.com/rust-lang/cargo): 
+你可以通过rust的包管理[cargo](https://github.com/rust-lang/cargo)安装*fd*:
 
     cargo install fd-find
 
 注意rust版本要*1.20.0*或以上. 
 
-### 从二进制文件
+### 二进制文件
 
-这个[发布页面](https://github.com/sharkdp/fd/releases)包括Linux,MaOS和Windows的预编译二进制文件. 
+这个[releases页面](https://github.com/sharkdp/fd/releases)包括Linux,MaOS和Windows的预编译二进制文件. 
 
 ## 开发
 
@@ -330,14 +330,14 @@ cargo install
 
 ### 简单搜索
 
-*fd*设计用于查找文件系统中的条目. 你可以执行的最基本的搜索就是运行*fd*带有一个参数: 搜索模式. 例如,假设您想查找您的旧脚本 (包括`netflix`) : 
+*fd*设计用于查找文件系统中的条目. 你可以执行的最基本的搜索就是运行一个参数:搜索模式的*fd*. 例如,假设您想查找您的旧脚本 (包括`netflix`) : 
 
 ```bash
 > fd netfl
 Software/python/imdb-ratings/netflix-details.py
 ```
 
-如果只调用一个这样的参数,*fd*递归检索当前目录中*包含*模式`netfl`的任何条目.
+如果只调用一个这样的参数,*fd*递归检索当前目录中, *包含*模式`netfl`的任何条目.
 
 ### 正则表达式搜索
 
@@ -483,6 +483,6 @@ export FZF_DEFAULT_OPTS="--ansi"
 
 Emacs封装了[find-file-in-project](https://github.com/technomancy/find-file-in-project)包, 这可以使用*fd*查找文件. 
 
-安装`find-file-in-project`后添加行`(setq ffip-use-rust-fd t)`对你`~/.emacs`或`~/.emacs.d/init.el`文件. 
+安装`find-file-in-project`后，添加行`(setq ffip-use-rust-fd t)`在你的`~/.emacs`或`~/.emacs.d/init.el`文件中. 
 
 在Emacs中,运行`M-x find-file-in-project-by-selected`查找匹配文件. 或者,运行`M-x find-file-in-project`列出项目中所有可用的文件. 
