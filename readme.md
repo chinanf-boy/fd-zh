@@ -160,7 +160,7 @@
 -   `{.}`: 像`{}`,但没有文件扩展名 (`documents/images/party`) 
 -   `{/}`:占位符,将被搜索结果的基名替换 (占位符) . `party.jpg`) 
 -   `{//}`:使用已发现路径的父节点 (`documents/images`) 
--   `{/.}`:使用BaseNeNe,将扩展名移除 (`party`) 
+-   `{/.}`:使用BaseName,将扩展名移除 (`party`) 
 
 ```bash
 # 转换 所有 jpg 到  png :
