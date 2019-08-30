@@ -99,7 +99,7 @@
 -   正则表达式. 
 -   Unicode感知. 
 -   命令输入量*50%*优于[\*](https://github.com/ggreer/the_silver_searcher)`find`: -) 
--   用类似于GNU穿行的语法，执行并行命令. 
+-   用类似于GNU [*Parallel*](https://www.gnu.org/software/parallel/)的语法，执行并行命令. 
 
 ## 演示
 
