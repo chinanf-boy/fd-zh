@@ -84,22 +84,22 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/21c4p5fwggc5gy3j?svg=true)](https://ci.appveyor.com/project/sharkdp/fd)
 [![Version info](https://img.shields.io/crates/v/fd-find.svg)](https://crates.io/crates/fd-find)
 
-*fd*是一种简单ㄡ快速和用户友好的[*fd*](https://www.gnu.org/software/findutils/)替代方案. 
+*fd*是一种简单、快速且用户友好的[*find*](https://www.gnu.org/software/findutils/)替代方案。
 
-虽然它不寻求复刻*find*所有强大的功能,但它提供了明智的 (自定的) [80%](https://en.wikipedia.org/wiki/Pareto_principle)的用例. 
+它并不追求复刻*find*所有的强大功能，而是直截了当地提供了[80%](https://en.wikipedia.org/wiki/Pareto_principle)情况下都合理的默认值。
 
 ## 特征
 
--   方便语法: `fd PATTERN`而不是`find -iname '*PATTERN*'`.
--   彩色终端输出 (类似于*ls*) 
--   它是*快速的* (见[基准](#%E5%9F%BA%E5%87%86)下面) . 
--   聪明案例: 默认情况下,搜索不区分大小写. 如果模式包含大写字符[\*](http://vimdoc.sourceforge.net/htmldoc/options.html#'smartcase'), 则切换为区分大小写字符. .
--   默认情况下,忽略隐藏的目录和文件. 
--   忽略匹配你`.gitignore`文件中的模式,默认情况. 
--   正则表达式. 
--   Unicode感知. 
--   命令输入量*50%*优于[\*](https://github.com/ggreer/the_silver_searcher)`find`: -) 
--   用类似于GNU穿行的语法，执行并行命令. 
+-   简便的语法: `fd PATTERN`而不是`find -iname '*PATTERN*'`。
+-   彩色终端输出 (类似于*ls*) 。
+-   它是*快速的* (见[基准](#%E5%9F%BA%E5%87%86)下面) 。
+-   智能大小写敏感: 默认情况下，搜索不区分大小写. 如果模式包含大写字符[\*](http://vimdoc.sourceforge.net/htmldoc/options.html#'smartcase'), 则切换为区分大小写字符。
+-   默认情况下，忽略隐藏的目录和文件。
+-   默认情况下，忽略匹配你`.gitignore`文件中的模式。
+-   正则表达式。
+-   Unicode感知。 
+-   命令输入量比[\*](https://github.com/ggreer/the_silver_searcher)`find`少*50%*: -) 
+-   用类似于GNU Parallel的语法，执行并行命令. 
 
 ## 演示
 
@@ -107,7 +107,7 @@
 
 ## 基准
 
-让我们搜索我的主文件夹的以`[0-9].jpg`为结束的文件. 它包含190个子目录和大约一百万个文件. 我使用[hyperfine](https://github.com/sharkdp/hyperfine)进行平均和统计分析. 下面的基准是用"warm"/预填充的磁盘缓存执行的 (对于"冷"磁盘缓存的结果显示出相同的趋势) . 
+让我们搜索我的主文件夹的以`[0-9].jpg`结尾的文件。它包含190个子目录和大约一百万个文件. 我使用[hyperfine](https://github.com/sharkdp/hyperfine)进行平均和统计分析. 下面的基准是用"warm"/预填充的磁盘缓存执行的 (对于"冷"磁盘缓存的结果显示出相同的趋势) . 
 
 让我们从`find`: 
 
@@ -146,21 +146,21 @@
 
 **注释**这是在*一个特定的*机器上的*一个特定的*基准. 虽然我已经做了很多不同的测试 (并且发现了一致的结果) ,但是事情可能对你来说不同. 我鼓励每个人自己尝试测试. 在[这个仓库](https://github.com/sharkdp/fd-benchmarks)是所有用于对比的脚本. 
 
-关于*fd*的速度,主要的耗时在`regex`和`ignore`,还有[ripgrep](https://github.com/BurntSushi/ripgrep)箱子 (检查一下!) .
+关于*fd*的速度，主要归功于`regex`和`ignore`两个crates，[ripgrep](https://github.com/BurntSushi/ripgrep)也用了这两个crates (查看一下！) .
 
 ## 彩色输出
 
-`fd`可以通过扩展来帮输出着色,就像`ls`. 为了使这工作,环境变量[`LS_COLORS`](https://linux.die.net/man/5/dir_colors)必须设置. 通常,此变量的值由`dircolors`命令控制,它提供了一种方便的配置格式,来定义不同文件格式的颜色. 在大多数分配情况,`LS_COLORS`应该已经设置好了. 如果您正在寻找替代的，且更完整的 (以及更丰富多彩的) 变体,请参见[在这里](https://github.com/seebi/dircolors-solarized)或[在这里](https://github.com/trapd00r/LS_COLORS).
+`fd`可以通过扩展来帮输出着色,就像`ls`。 为了让它工作，环境变量[`LS_COLORS`](https://linux.die.net/man/5/dir_colors)必须被设置。通常,此变量的值由`dircolors`命令控制,它提供了一种方便的配置格式,来定义不同文件格式的颜色. 在大多数发行版中,`LS_COLORS`应该已经设置好了。如果您正在寻找替代的，且更完整的 (以及更丰富多彩的) 变体,请参见[在这里](https://github.com/seebi/dircolors-solarized)或[在这里](https://github.com/trapd00r/LS_COLORS).
 
 ## 并行命令执行
 
-如果`-x`/`--exec`选项与命令模板一起指定,将创建一个作业池,用于并行执行命令，每个发现的路径则作为输入. 生成命令的语法类似于GNU穿行的语法: 
+如果`-x`/`--exec`选项与命令模板一起指定,将创建一个作业池，用于并行执行命令，每个发现的路径则作为输入。生成命令的语法类似于GNU Parallel的语法: 
 
--   `{}`: 将被替换为搜索结果路径的占位符令牌 (`documents/images/party.jpg`) 
--   `{.}`: 像`{}`,但没有文件扩展名 (`documents/images/party`) 
--   `{/}`:占位符,将被搜索结果的基名替换 (占位符) . `party.jpg`) 
+-   `{}`: 将被替换为搜索结果路径的占位符 (`documents/images/party.jpg`) 
+-   `{.}`: 像`{}`，但没有文件扩展名 (`documents/images/party`) 
+-   `{/}`:占位符，将被搜索结果的文件名替换 (占位符) . `party.jpg`) 
 -   `{//}`:使用已发现路径的父节点 (`documents/images`) 
--   `{/.}`:使用BaseNeNe,将扩展名移除 (`party`) 
+-   `{/.}`:使用文件名，将扩展名移除 (`party`) 
 
 ```bash
 # 转换 所有 jpg 到  png :
@@ -190,7 +190,7 @@ sudo dpkg -i fd_7.0.0_amd64.deb  # adapt version number and architecture
 
 ### Fedora
 
-从 FEDORA 28 开始,您可以从官方包装来源安装`fd`: 
+从 FEDORA 28 开始,您可以从官方仓库安装`fd`: 
 
 ```bash
 dnf install fd-find
@@ -205,35 +205,35 @@ dnf install fd
 
 ### Arch Linux
 
-你可以从官方回购安装[fd 软件包](https://www.archlinux.org/packages/community/x86_64/fd/): 
+你可以从官方仓库安装[fd 软件包](https://www.archlinux.org/packages/community/x86_64/fd/): 
 
     pacman -S fd
 
 ### Gentoo Linux
 
-你可以从官方回购使用[fd 软件包](https://packages.gentoo.org/packages/sys-apps/fd): 
+你可以从官方仓库使用[fd 软件包](https://packages.gentoo.org/packages/sys-apps/fd): 
 
     emerge -av fd
 
 ### openSUSE Linux
 
-你可以从官方回购安装[fd 软件包](https://software.opensuse.org/package/fd): 
+你可以从官方仓库安装[fd 软件包](https://software.opensuse.org/package/fd): 
 
     zypper in fd
 
 ### Void Linux
 
-你可以安装`fd`通过xbps安装: 
+你可以通过xbps-install安装`fd`: 
 
     xbps-install -S fd
 
 ### macOS
 
-你可以安装`fd`具有[brew](http://braumeister.org/formula/fd): 
+你可以通过[brew](http://braumeister.org/formula/fd)安装`fd`: 
 
     brew install fd
 
-或与Mac port: 
+或通过MacPorts: 
 
     sudo port install fd
 
@@ -241,7 +241,7 @@ dnf install fd
 
 您可以从中 [releases页面](https://github.com/sharkdp/fd/releases)，下载预构建的二进制文件.
 
-或者,您可以安装`fd`通过[Scoop](http://scoop.sh): 
+或者,您可以通过[Scoop](http://scoop.sh)安装`fd`: 
 
     scoop install fd
 
@@ -257,7 +257,7 @@ dnf install fd
 
 ### FreeBSD
 
-你可以安装`sysutils/fd`通过patmaster: 
+你可以通过patmaster安装`sysutils/fd`: 
 
     portmaster sysutils/fd
 
@@ -298,11 +298,11 @@ cargo install
         -H, --hidden            搜索隐藏的文件和目录
         -I, --no-ignore         不要忽略 .(git | fd)ignore 文件匹配
             --no-ignore-vcs     不要忽略.gitignore文件的匹配
-        -s, --case-sensitive    区分大小写的搜索（默认值：智能案例）
-        -i, --ignore-case       不区分大小写的搜索（默认值：智能案例）
+        -s, --case-sensitive    区分大小写的搜索（默认值：智能大小写敏感）
+        -i, --ignore-case       不区分大小写的搜索（默认值：智能大小写敏感）
         -F, --fixed-strings     将模式视为文字字符串
         -a, --absolute-path     显示绝对路径而不是相对路径
-        -L, --follow            遵循符号链接
+        -L, --follow            解析符号链接
         -p, --full-path         搜索完整路径（默认值：仅限 file-/dirname）
         -0, --print0            用null字符分隔结果
         -h, --help              打印帮助信息
@@ -321,8 +321,8 @@ cargo install
         -S, --size <size>...           根据文件大小限制结果。
 
     ARGS:
-        <pattern>    the search pattern, a regular expression (optional)
-        <path>...    the root directory for the filesystem search (optional)
+        <pattern>    匹配模式, 一个正则表达式 (可选的)
+        <path>...    搜索的根目录 (可选的)
 
 ## 教程
 
@@ -330,7 +330,7 @@ cargo install
 
 ### 简单搜索
 
-*fd*设计用于查找文件系统中的条目. 你可以执行的最基本的搜索就是运行一个参数:搜索模式的*fd*. 例如,假设您想查找您的旧脚本 (包括`netflix`) : 
+*fd*设计用于查找文件系统中的条目. 你可以执行的最基本的搜索就是运行一个参数:搜索模式的*fd*. 例如,假设您想查找您的旧脚本 (文件名包含`netflix`) : 
 
 ```bash
 > fd netfl
@@ -363,7 +363,7 @@ X11/xinit/xserverrc
 
 ### 仅运行*fd*
 
-*fd*可以不带参数调用. 这是非常有用的,以便快速地查看当前目录中的所有条目,递归地 (类似于`ls -R`) : 
+*fd*可以不带参数调用. 这是非常有用的,以便快速地递归查看当前目录中的所有条目(类似于`ls -R`) : 
 
 ```bash
 > cd fd/tests
@@ -375,7 +375,7 @@ tests.rs
 
 ### 搜索特定的文件扩展名
 
-通常,我们对特定类型的所有文件感兴趣. 这可以用`-e` (或) `--extension`选择权. 在这里,我们搜索FD仓库中的所有md文件: 
+通常,我们对特定类型的所有文件感兴趣. 这可以用`-e` (或) `--extension`选项. 在这里,我们搜索fd仓库中的所有md文件: 
 
 ```bash
 > cd fd
@@ -443,7 +443,7 @@ target/debug/deps/libnum_cpus-f5ce7ef99006aa05.rlib
 
 ### 使用fd  带`xargs`或`parallel`
 
-如果我们想在所有搜索结果上运行命令,我们可以将输出管`xargs`: 
+如果我们想在所有搜索结果上运行命令,我们可以将输出与`xargs`形成管道: 
 
 ```bash
 > fd -0 -e rs | xargs -0 wc -l
@@ -464,7 +464,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 然后,您可以键入`vim <Ctrl-T>`在你的终端打开FZF，也即是fd的搜索结果. 
 
-或者,您可能喜欢遵循符号链接并包含隐藏文件 (但不包括`.git`文件夹) : 
+或者,您可能喜欢解析符号链接并包含隐藏文件 (但不包括`.git`文件夹) : 
 
 ```bash
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
@@ -477,7 +477,7 @@ export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_DEFAULT_OPTS="--ansi"
 ```
 
-有关详细信息,请参见 *fzf* reamde文件的[提示部分](https://github.com/junegunn/fzf#tips). 
+有关详细信息,请参见 *fzf* README文件的[提示部分](https://github.com/junegunn/fzf#tips). 
 
 #### 使用fd与`emacs`
 
